@@ -1,7 +1,7 @@
 import React from 'react';
-import { Download, Upload, Trash2, FileText } from 'lucide-react';
+import { Download, Upload, Trash2, FileText, Sun, Moon } from 'lucide-react';
 
-const Toolbar = ({ onUpload, onDownload, onClear }) => {
+const Toolbar = ({ onUpload, onDownload, onClear, theme, onToggleTheme }) => {
   return (
     <header style={{
       display: 'flex',
@@ -9,7 +9,8 @@ const Toolbar = ({ onUpload, onDownload, onClear }) => {
       justifyContent: 'space-between',
       padding: '16px 24px',
       borderBottom: '1px solid var(--border-color)',
-      backgroundColor: 'var(--bg-primary)'
+      backgroundColor: 'var(--bg-primary)',
+      transition: 'background-color 0.2s ease, border-color 0.2s ease'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <div style={{
@@ -31,6 +32,10 @@ const Toolbar = ({ onUpload, onDownload, onClear }) => {
       </div>
 
       <div style={{ display: 'flex', gap: '12px' }}>
+        <button className="button" onClick={onToggleTheme} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === 'dark' ? 'Light' : 'Dark'}
+        </button>
         <button className="button" onClick={onClear}>
           <Trash2 size={16} />
           Clear
@@ -39,11 +44,11 @@ const Toolbar = ({ onUpload, onDownload, onClear }) => {
           <Upload size={16} />
           Import MD
         </button>
-        <input 
-          type="file" 
-          id="file-upload" 
-          accept=".md,.txt" 
-          style={{ display: 'none' }} 
+        <input
+          type="file"
+          id="file-upload"
+          accept=".md,.txt"
+          style={{ display: 'none' }}
           onChange={onUpload}
         />
         <button className="button primary" onClick={onDownload}>

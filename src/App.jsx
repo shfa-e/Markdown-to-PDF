@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import html2pdf from 'html2pdf.js';
 import Toolbar from './components/Toolbar';
 import Editor from './components/Editor';
@@ -21,7 +21,17 @@ This is a simple tool to convert your markdown text into professional PDF docume
 
 function App() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   const previewRef = useRef(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
@@ -61,6 +71,8 @@ function App() {
         onUpload={handleUpload}
         onDownload={handleDownload}
         onClear={handleClear}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <main style={{
         display: 'flex',

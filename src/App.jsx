@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useRef } from 'react';
+import html2pdf from 'html2pdf.js';
+import Toolbar from './components/Toolbar';
+import Editor from './components/Editor';
+import Preview from './components/Preview';
+
+const DEFAULT_MARKDOWN = `# Welcome to Markdown to PDF
+
+This is a simple tool to convert your markdown text into professional PDF documents.
+
+## Features
+- **Live Preview**: See your changes instantly.
+- **Easy Export**: One-click PDF download.
+- **Privacy Focus**: Everything runs in your browser.
+
+## How to use
+1. Type or paste your markdown on the left.
+2. View the preview on the right.
+3. Click "Download PDF" when ready.
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
+  const previewRef = useRef(null);
+
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setMarkdown(e.target.result);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!previewRef.current) return;
+
+    const element = previewRef.current;
+    const opt = {
+      margin: 0, // We handle margins in CSS padding
+      filename: 'document.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
+  const handleClear = () => {
+    if (confirm('Are you sure you want to clear the editor?')) {
+      setMarkdown('');
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Toolbar
+        onUpload={handleUpload}
+        onDownload={handleDownload}
+        onClear={handleClear}
+      />
+      <main style={{
+        display: 'flex',
+        flex: 1,
+        overflow: 'hidden'
+      }}>
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <Editor value={markdown} onChange={setMarkdown} />
+        </div>
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <Preview ref={previewRef} content={markdown} />
+        </div>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

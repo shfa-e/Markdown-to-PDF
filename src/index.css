@@ -6,7 +6,6 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --accent-color: #3b82f6;
-  /* Blue-500 */
   --accent-hover: #2563eb;
   --success-color: #22c55e;
 }
@@ -81,12 +80,45 @@ body {
   background-color: var(--accent-hover);
 }
 
+/* Resizer */
+.resizer {
+  width: 12px;
+  background-color: transparent;
+  cursor: col-resize;
+  position: relative;
+  z-index: 100;
+  margin: 0 -6px;
+  transition: background-color 0.2s ease;
+}
+
+.resizer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background-color: var(--border-color);
+  transform: translateX(-50%);
+  transition: all 0.2s ease;
+}
+
+.resizer:hover::after,
+.resizer.dragging::after {
+  width: 2px;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+.resizer.dragging {
+  background-color: rgba(59, 130, 246, 0.03);
+}
+
 /* Markdown Styles (Preview) */
 .markdown-preview {
   font-family: var(--font-sans);
   line-height: 1.6;
   color: #1a1a1a;
-  /* Black text for PDF readability */
 }
 
 .markdown-preview h1,

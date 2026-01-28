@@ -7,8 +7,7 @@ const Editor = ({ value, onChange }) => {
             flexDirection: 'column',
             height: '100%',
             width: '100%',
-            backgroundColor: 'var(--bg-secondary)',
-            borderRight: '1px solid var(--border-color)'
+            backgroundColor: 'var(--bg-secondary)'
         }}>
             <div style={{
                 padding: '12px 24px',

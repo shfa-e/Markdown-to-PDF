@@ -22,6 +22,8 @@ This is a simple tool to convert your markdown text into professional PDF docume
 function App() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [splitPosition, setSplitPosition] = useState(50); // percentage
+  const [isDragging, setIsDragging] = useState(false);
   const previewRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +34,35 @@ function App() {
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      const newSplitPosition = (e.clientX / window.innerWidth) * 100;
+      if (newSplitPosition > 20 && newSplitPosition < 80) {
+        setSplitPosition(newSplitPosition);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
@@ -49,7 +80,7 @@ function App() {
 
     const element = previewRef.current;
     const opt = {
-      margin: 0, // We handle margins in CSS padding
+      margin: 0,
       filename: 'document.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true },
@@ -77,12 +108,17 @@ function App() {
       <main style={{
         display: 'flex',
         flex: 1,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        cursor: isDragging ? 'col-resize' : 'default'
       }}>
-        <div style={{ flex: 1, overflow: 'hidden' }}>
+        <div style={{ width: `${splitPosition}%`, overflow: 'hidden' }}>
           <Editor value={markdown} onChange={setMarkdown} />
         </div>
-        <div style={{ flex: 1, overflow: 'hidden' }}>
+        <div
+          className={`resizer ${isDragging ? 'dragging' : ''}`}
+          onMouseDown={handleMouseDown}
+        />
+        <div style={{ width: `${100 - splitPosition}%`, overflow: 'hidden' }}>
           <Preview ref={previewRef} content={markdown} />
         </div>
       </main>

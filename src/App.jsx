@@ -4,7 +4,9 @@ import Toolbar from './components/Toolbar';
 import Editor from './components/Editor';
 import Preview from './components/Preview';
 
-const DEFAULT_MARKDOWN = `# Welcome to Markdown to PDF
+import { translations } from './translations';
+
+const DEFAULT_MARKDOWN_EN = `# Welcome to Markdown to PDF
 
 This is a **live editor**. Start typing on the left to see your changes update instantly on the right.
 
@@ -30,9 +32,36 @@ function hello() {
 > "Simplicity is the ultimate sophistication." — Leonardo da Vinci
 `;
 
+const DEFAULT_MARKDOWN_AR = `# مرحباً بك في محول الماركدون إلى PDF
+
+هذا **محرر مباشر**. ابدأ الكتابة على اليمين لرؤية التغييرات فوراً على اليسار.
+
+## المميزات
+- ✨ تصميم أنيق وعصري
+- 🚀 معاينة فورية
+- 📦 دعم **سحب وإفلات** الملفات
+- 🎨 ماركدون بنكهة GitHub (جداول، مربعات اختيار)
+
+### مثال برمجي
+\`\`\`javascript
+function hello() {
+  console.log("مرحباً بالعالم!");
+}
+\`\`\`
+
+### قائمة المهام
+- [x] تصميم واجهة جميلة
+- [x] برمجة منطق التحويل
+- [ ] إضافة الوضع الداكن
+
+---
+> "البساطة هي قمة الرقي." — ليوناردو دا فينشي
+`;
+
 function App() {
-  const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
+  const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN_EN);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [lang, setLang] = useState('en'); // 'en' or 'ar'
   const [title, setTitle] = useState('Untitled Document');
   const [splitPosition, setSplitPosition] = useState(50); // percentage
   const [isDragging, setIsDragging] = useState(false);
@@ -41,13 +70,31 @@ function App() {
   const previewRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  const t = translations[lang];
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  const toggleLanguage = () => {
+    setLang(prev => {
+      const newLang = prev === 'en' ? 'ar' : 'en';
+      // Switch content if it matches the default of the OLD language
+      if (markdown === (prev === 'en' ? DEFAULT_MARKDOWN_EN : DEFAULT_MARKDOWN_AR)) {
+        setMarkdown(newLang === 'en' ? DEFAULT_MARKDOWN_EN : DEFAULT_MARKDOWN_AR);
+      }
+      return newLang;
+    });
   };
 
   const handleMouseDown = (e) => {
@@ -138,6 +185,9 @@ function App() {
         onToggleTheme={toggleTheme}
         title={title}
         onTitleChange={setTitle}
+        lang={lang}
+        toggleLanguage={toggleLanguage}
+        t={t}
       />
 
       <main style={{
@@ -155,6 +205,7 @@ function App() {
             onTabSwitch={handleTabSwitch}
             onUpload={handleUpload}
             fileInputRef={fileInputRef}
+            t={t}
           />
         </div>
 
@@ -195,26 +246,26 @@ function App() {
               fontSize: '1.25rem',
               fontWeight: 600,
               color: 'var(--text-primary)'
-            }}>Clear Editor?</h2>
+            }}>{t.clearModal.title}</h2>
             <p style={{
               margin: '0 0 24px 0',
               color: 'var(--text-secondary)',
               lineHeight: 1.6
-            }}>Are you sure you want to clear all content? This action cannot be undone.</p>
+            }}>{t.clearModal.body}</p>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
               <button
                 className="button"
                 onClick={cancelClear}
                 style={{ minWidth: '80px' }}
               >
-                Cancel
+                {t.clearModal.cancel}
               </button>
               <button
                 className="button primary"
                 onClick={confirmClear}
                 style={{ minWidth: '80px', backgroundColor: '#ef4444' }}
               >
-                Clear
+                {t.clearModal.confirm}
               </button>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Trash2, Sun, Moon, Coffee } from 'lucide-react';
+import { Download, Trash2, Sun, Moon, Coffee, Languages } from 'lucide-react';
 
-const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChange }) => {
+const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChange, lang, toggleLanguage, t }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [localTitle, setLocalTitle] = useState(title);
 
@@ -85,8 +85,20 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
         <button
           className="button"
+          onClick={toggleLanguage}
+          title={t.toggleLanguage === 'English' ? 'Switch to English' : 'Switch to Arabic'}
+          style={{ padding: '8px 12px', minWidth: '80px', fontFamily: lang === 'en' ? 'var(--font-sans)' : 'system-ui' }}
+        >
+          <Languages size={18} />
+          <span>{t.toggleLanguage}</span>
+        </button>
+
+        <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
+
+        <button
+          className="button"
           onClick={onToggleTheme}
-          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={theme === 'dark' ? t.theme.light : t.theme.dark}
           style={{ padding: '8px' }}
         >
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -94,14 +106,14 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
 
         <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
 
-        <button className="button" onClick={onClear} title="Clear Editor">
+        <button className="button" onClick={onClear} title={t.clear}>
           <Trash2 size={18} />
-          <span className="hide-mobile">Clear</span>
+          <span className="hide-mobile">{t.clear}</span>
         </button>
 
-        <button className="button primary" onClick={onDownload} title="Export as PDF">
+        <button className="button primary" onClick={onDownload} title={t.downloadPdf}>
           <Download size={18} />
-          <span>Download PDF</span>
+          <span>{t.downloadPdf}</span>
         </button>
 
         <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
@@ -123,7 +135,7 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
           }}
         >
           <Coffee size={18} />
-          <span className="hide-mobile">Support</span>
+          <span className="hide-mobile">{t.support}</span>
         </a>
       </div>
 
@@ -132,7 +144,7 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
           .hide-mobile { display: none; }
         }
       `}</style>
-    </header >
+    </header>
   );
 };
 

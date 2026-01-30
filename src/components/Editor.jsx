@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Upload } from 'lucide-react';
 
-const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRef }) => {
+const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRef, t }) => {
     const [isDragging, setIsDragging] = useState(false);
 
     const handleDragEnter = (e) => {
@@ -78,7 +78,7 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
                         fontFamily: 'var(--font-sans)'
                     }}
                 >
-                    Markdown Input
+                    {t.markdownInput}
                 </button>
                 <button
                     onClick={() => onTabSwitch('upload')}
@@ -99,7 +99,7 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
                     }}
                 >
                     <Upload size={16} />
-                    Upload File
+                    {t.uploadFile}
                 </button>
             </div>
 
@@ -126,9 +126,9 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
                 alignItems: 'center',
                 backgroundColor: 'var(--bg-secondary)'
             }}>
-                <span>{activeTab === 'input' ? 'Editor' : 'Upload'}</span>
+                <span>{activeTab === 'input' ? t.editor.header : t.editor.upload}</span>
                 {activeTab === 'input' && (
-                    <span style={{ opacity: 0.5 }}>{value.length} characters</span>
+                    <span style={{ opacity: 0.5 }}>{value.length} {t.editor.chars}</span>
                 )}
             </div>
 
@@ -184,7 +184,7 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
                         color: 'var(--text-primary)',
                         marginBottom: '8px'
                     }}>
-                        Upload Markdown File
+                        {t.editor.dragTitle}
                     </h3>
                     <p style={{
                         fontSize: '0.875rem',
@@ -193,7 +193,7 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
                         lineHeight: 1.6,
                         maxWidth: '300px'
                     }}>
-                        Click to browse or drag and drop your .md or .txt file here
+                        {t.editor.dragBody}
                     </p>
                 </div>
             )}

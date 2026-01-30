@@ -83,28 +83,6 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
       </div>
 
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        <a
-          href="https://www.buymeacoffee.com/shfae"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button"
-          title="Buy Me a Coffee"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            textDecoration: 'none',
-            backgroundColor: '#FFDD00',
-            color: '#000000',
-            border: 'none'
-          }}
-        >
-          <Coffee size={18} />
-          <span className="hide-mobile">Support</span>
-        </a>
-
-        <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
-
         <button
           className="button"
           onClick={onToggleTheme}
@@ -125,6 +103,28 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
           <Download size={18} />
           <span>Download PDF</span>
         </button>
+
+        <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
+
+        <a
+          href="https://www.buymeacoffee.com/shfae"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button"
+          title="Buy Me a Coffee"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            textDecoration: 'none',
+            backgroundColor: '#FFDD00',
+            color: '#000000',
+            border: 'none'
+          }}
+        >
+          <Coffee size={18} />
+          <span className="hide-mobile">Support</span>
+        </a>
       </div>
 
       <style>{`
@@ -132,9 +132,8 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
           .hide-mobile { display: none; }
         }
       `}</style>
-    </header>
+    </header >
   );
 };
 
 export default Toolbar;
-

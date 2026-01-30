@@ -188,13 +188,21 @@ body::after {
   margin: 0 auto;
   overflow-wrap: break-word;
   /* Prevent long words from breaking layout */
-  min-height: 297mm !important;
+  min-height: 297mm;
   height: auto !important;
+  /* Allow infinite expansion */
+  flex-shrink: 0;
+  /* Prevent shrinking in flex container */
+  display: block;
+
+  background-color: white;
 }
 
 .markdown-preview * {
   box-sizing: border-box;
   /* Ensure padding doesn't push width out */
+  max-width: 100%;
+  /* Prevent children directly overflowing */
 }
 
 .markdown-preview h1,

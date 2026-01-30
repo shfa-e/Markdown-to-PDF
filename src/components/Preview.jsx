@@ -43,8 +43,6 @@ const Preview = forwardRef(({ content }, ref) => {
                     style={{
                         width: '100%',
                         maxWidth: '210mm',
-                        minHeight: '297mm',
-                        height: 'auto',
                         backgroundColor: 'white',
                         padding: '20mm',
                         borderRadius: '4px',

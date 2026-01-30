@@ -8,41 +8,49 @@ const Preview = forwardRef(({ content }, ref) => {
             flexDirection: 'column',
             height: '100%',
             width: '100%',
-            backgroundColor: 'var(--bg-tertiary)',
-            overflowY: 'auto'
+            backgroundColor: 'var(--bg-app)',
+            overflow: 'hidden'
         }}>
             <div style={{
                 padding: '12px 24px',
                 borderBottom: '1px solid var(--border-color)',
+                borderLeft: '1px solid var(--border-color)',
                 color: 'var(--text-secondary)',
-                fontSize: '0.875rem',
-                fontWeight: 500,
+                fontSize: '0.75rem',
+                fontWeight: 600,
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                backgroundColor: 'var(--bg-secondary)', // Sticky header match
-                position: 'sticky',
-                top: 0,
-                zIndex: 10
+                letterSpacing: '0.1em',
+                backgroundColor: 'var(--bg-secondary)'
             }}>
-                Preview
+                Live Preview
             </div>
-
-            <div style={{
-                padding: '40px',
-                display: 'flex',
-                justifyContent: 'center',
-                minHeight: 'calc(100% - 45px)'
-            }}>
+            <div
+                className="preview-scroll-container"
+                style={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    padding: '48px 24px',
+                    borderLeft: '1px solid var(--border-color)',
+                    backgroundColor: 'var(--bg-app)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
                 <div
                     ref={ref}
                     className="markdown-preview"
                     style={{
-                        width: '210mm', // A4 width
-                        minHeight: '297mm', // A4 height
+                        width: '100%',
+                        maxWidth: '210mm',
+                        minHeight: '297mm',
+                        height: 'auto',
                         backgroundColor: 'white',
-                        padding: '20mm', // Standard margins
-                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                        color: 'black' // Enforcement
+                        padding: '20mm',
+                        borderRadius: '4px',
+                        boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                        color: '#1a1a1a',
+                        marginBottom: '48px'
                     }}
                 >
                     {content ? (
@@ -66,3 +74,4 @@ const Preview = forwardRef(({ content }, ref) => {
 Preview.displayName = 'Preview';
 
 export default Preview;
+

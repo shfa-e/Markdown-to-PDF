@@ -33,6 +33,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inspect build output
+        run: |
+          ls -la
+          ls -la dist || true
+          ls -la build || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

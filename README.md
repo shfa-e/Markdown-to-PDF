@@ -4,7 +4,6 @@ A beautiful, modern web application for converting Markdown documents to PDF wit
 
 ![Markdown to PDF](https://img.shields.io/badge/React-18.3.1-blue?logo=react)
 ![Vite](https://img.shields.io/badge/Vite-6.0.5-646CFF?logo=vite)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 ## ✨ Features
 
@@ -79,7 +78,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ☕ Support
 
-If you find this tool helpful, consider [buying me a coffee](https://www.buymeacoffee.com/shfae)!
+If you find this tool helpful, consider [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/shefaa)
 
 ## 🔗 Links
 
@@ -89,4 +88,4 @@ If you find this tool helpful, consider [buying me a coffee](https://www.buymeac
 
 ---
 
-Made with ❤️ by [shfa-e](https://github.com/shfa-e)
+Made with 🤍 by [shfa-e](https://github.com/shfa-e)

@@ -107,7 +107,7 @@ const Toolbar = ({ onDownload, onClear, theme, onToggleTheme, title, onTitleChan
         <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
 
         <a
-          href="https://www.buymeacoffee.com/shfae"
+          href="https://www.buymeacoffee.com/shefaa"
           target="_blank"
           rel="noopener noreferrer"
           className="button"

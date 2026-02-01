@@ -38,6 +38,8 @@ function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState('input'); // 'input' or 'upload'
   const [showClearModal, setShowClearModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [mobileView, setMobileView] = useState('editor'); // 'editor' or 'preview'
   const previewRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -45,6 +47,17 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Handle screen resize for responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -145,9 +158,37 @@ function App() {
         flex: 1,
         overflow: 'hidden',
         cursor: isDragging ? 'col-resize' : 'default',
-        backgroundColor: 'var(--bg-app)'
+        backgroundColor: 'var(--bg-app)',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
-        <div style={{ width: `${splitPosition}%`, minWidth: '10%', overflow: 'hidden' }}>
+        {/* Mobile View Toggle */}
+        {isMobile && (
+          <div className="mobile-view-toggle">
+            <button
+              className={mobileView === 'editor' ? 'active' : ''}
+              onClick={() => setMobileView('editor')}
+            >
+              Editor
+            </button>
+            <button
+              className={mobileView === 'preview' ? 'active' : ''}
+              onClick={() => setMobileView('preview')}
+            >
+              Preview
+            </button>
+          </div>
+        )}
+
+        {/* Editor Panel */}
+        <div
+          style={{
+            width: isMobile ? '100%' : `${splitPosition}%`,
+            minWidth: isMobile ? '100%' : '10%',
+            overflow: 'hidden',
+            display: isMobile && mobileView !== 'editor' ? 'none' : 'flex',
+            flexDirection: 'column'
+          }}
+        >
           <Editor
             value={markdown}
             onChange={setMarkdown}
@@ -158,12 +199,25 @@ function App() {
           />
         </div>
 
-        <div
-          className={`resizer ${isDragging ? 'dragging' : ''}`}
-          onMouseDown={handleMouseDown}
-        />
+        {/* Resizer - hidden on mobile */}
+        {!isMobile && (
+          <div
+            className={`resizer ${isDragging ? 'dragging' : ''}`}
+            onMouseDown={handleMouseDown}
+          />
+        )}
 
-        <div style={{ width: `${100 - splitPosition}%`, minWidth: '10%', overflow: 'hidden', height: '100%' }}>
+        {/* Preview Panel */}
+        <div
+          style={{
+            width: isMobile ? '100%' : `${100 - splitPosition}%`,
+            minWidth: isMobile ? '100%' : '10%',
+            overflow: 'hidden',
+            height: '100%',
+            display: isMobile && mobileView !== 'preview' ? 'none' : 'flex',
+            flexDirection: 'column'
+          }}
+        >
           <Preview ref={previewRef} content={markdown} />
         </div>
       </main>

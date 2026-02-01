@@ -307,3 +307,225 @@ body::after {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
 }
+
+/* ============================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+   ============================================ */
+
+/* Mobile Devices (< 768px) */
+@media (max-width: 767px) {
+
+  /* Hide resizer on mobile */
+  .resizer {
+    display: none !important;
+  }
+
+  /* Stack layout vertically */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+
+  /* Full width for mobile panels */
+  .mobile-full-width {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  /* Adjust toolbar for mobile */
+  header {
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 56px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Smaller buttons on mobile */
+  .button {
+    padding: 8px 12px !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .button.icon-only {
+    padding: 8px !important;
+  }
+
+  /* Adjust ambient glow for mobile */
+  body::before,
+  body::after {
+    width: 80vw;
+    height: 40vh;
+    filter: blur(80px);
+  }
+
+  /* Reduce padding in editor and preview */
+  .editor-textarea {
+    padding: 16px !important;
+    font-size: 0.9375rem !important;
+  }
+
+  .preview-scroll-container {
+    padding: 24px 12px !important;
+  }
+
+  .markdown-preview {
+    padding: 15mm !important;
+    max-width: 100% !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Adjust modal for mobile */
+  .glass-panel {
+    padding: 24px !important;
+    width: 95% !important;
+  }
+
+  /* Smaller typography in markdown preview on mobile */
+  .markdown-preview h1 {
+    font-size: 2em !important;
+  }
+
+  .markdown-preview h2 {
+    font-size: 1.5em !important;
+  }
+
+  .markdown-preview h3 {
+    font-size: 1.25em !important;
+  }
+
+  /* Mobile view toggle buttons */
+  .mobile-view-toggle {
+    display: flex !important;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+  }
+
+  .mobile-view-toggle button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .mobile-view-toggle button.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent-color);
+    background: var(--bg-primary);
+  }
+}
+
+/* Tablet Devices (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Larger touch targets for tablet */
+  .button {
+    padding: 10px 16px !important;
+    min-height: 40px;
+  }
+
+  .button.icon-only {
+    padding: 10px !important;
+    min-width: 40px;
+  }
+
+  /* Adjust resizer for touch */
+  .resizer {
+    width: 8px !important;
+  }
+
+  .resizer::after {
+    width: 4px !important;
+    height: 60px !important;
+  }
+
+  /* Optimize editor and preview spacing */
+  .editor-textarea {
+    padding: 24px !important;
+  }
+
+  .preview-scroll-container {
+    padding: 32px 16px !important;
+  }
+
+  .markdown-preview {
+    padding: 18mm !important;
+  }
+
+  /* Adjust toolbar */
+  header {
+    padding: 10px 20px !important;
+  }
+}
+
+/* Large Desktop (> 1440px) */
+@media (min-width: 1441px) {
+
+  /* Optimize for large screens */
+  .preview-scroll-container {
+    padding: 64px 48px !important;
+  }
+
+  .markdown-preview {
+    max-width: 210mm !important;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+
+  /* Reduce vertical padding in landscape */
+  .preview-scroll-container {
+    padding: 16px 12px !important;
+  }
+
+  .editor-textarea {
+    padding: 12px !important;
+  }
+
+  header {
+    min-height: 48px !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+  /* Larger touch targets */
+  .button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent text selection on buttons */
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+}
+
+/* Print styles */
+@media print {
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  header,
+  .resizer {
+    display: none !important;
+  }
+
+  .markdown-preview {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

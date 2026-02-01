@@ -55,6 +55,7 @@ const Editor = ({ value, onChange, activeTab, onTabSwitch, onUpload, fileInputRe
             width: '100%',
             backgroundColor: 'var(--bg-primary)',
             position: 'relative',
+            flex: 1
         }}>
             {/* Tab Navigation */}
             <div style={{

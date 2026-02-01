@@ -186,7 +186,8 @@ function App() {
             minWidth: isMobile ? '100%' : '10%',
             overflow: 'hidden',
             display: isMobile && mobileView !== 'editor' ? 'none' : 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            flex: 1
           }}
         >
           <Editor
@@ -215,7 +216,8 @@ function App() {
             overflow: 'hidden',
             height: '100%',
             display: isMobile && mobileView !== 'preview' ? 'none' : 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            flex: 1
           }}
         >
           <Preview ref={previewRef} content={markdown} />

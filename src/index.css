@@ -206,6 +206,10 @@ body::after {
   font-size: 14px;
 }
 
+.markdown-preview > *:first-child {
+  margin-top: 0 !important;
+}
+
 .markdown-preview * {
   box-sizing: border-box;
   /* Ensure padding doesn't push width out */

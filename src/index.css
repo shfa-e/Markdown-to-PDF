@@ -203,6 +203,7 @@ body::after {
   display: block;
 
   background-color: white;
+  font-size: 14px;
 }
 
 .markdown-preview * {
@@ -214,7 +215,10 @@ body::after {
 
 .markdown-preview h1,
 .markdown-preview h2,
-.markdown-preview h3 {
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
   margin-top: 2em;
   margin-bottom: 0.8em;
   font-weight: 700;
@@ -224,15 +228,36 @@ body::after {
 }
 
 .markdown-preview h1 {
-  font-size: 2.5em;
+  font-size: 2em;
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.4em;
 }
 
 .markdown-preview h2 {
-  font-size: 1.8em;
+  font-size: 1.5em;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.3em;
+}
+
+.markdown-preview h3 {
+  font-size: 1.25em;
+}
+
+.markdown-preview h4 {
+  font-size: 1.1em;
+}
+
+.markdown-preview h5 {
+  font-size: 1em;
+}
+
+.markdown-preview h6 {
+  font-size: 0.9em;
+}
+
+.markdown-preview a {
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .markdown-preview p {
@@ -256,15 +281,19 @@ body::after {
   font-family: var(--font-mono);
   font-size: 0.9em;
   border: 1px solid #e5e7eb;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .markdown-preview pre {
   background-color: #f9fafb;
   padding: 24px;
   border-radius: 12px;
-  overflow-x: auto;
   margin-bottom: 1.5em;
   border: 1px solid #e5e7eb;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .markdown-preview pre code {
